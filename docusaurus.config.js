@@ -1,8 +1,8 @@
 module.exports = {
    title: 'GNS3 Documentation',
    tagline: 'The official guide and reference for GNS3',
-   url: 'https://yueguobin.github.io',
-   baseUrl: '/gns3-docs/',
+   url: 'https://your-project.pages.dev',
+   baseUrl: '/',
    favicon: 'img/favicon.ico',
    organizationName: 'yueguobin',
    projectName: 'gns3-docs',
