@@ -1,5 +1,5 @@
 ---
-title: Cisco IOS 模板
+title: 如何创建 Cisco IOS 模板
 功能标签: [操作]
 难度: 入门
 前置知识: "拥有 Cisco IOS 镜像文件"
@@ -8,7 +8,7 @@ title: Cisco IOS 模板
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-# Cisco IOS 模板
+# 如何创建 Cisco IOS 模板
 
 :::tip 视频教程
 

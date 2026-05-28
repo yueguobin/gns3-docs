@@ -1,8 +1,8 @@
 ---
-title: GNS3 VM Overview
+title: How to use GNS3 VM
 ---
 
-# GNS3 VM Overview
+# How to use GNS3 VM
 
 GNS3 VM is a GNS3 server that runs inside a virtual machine. It gives you a full GNS3 network simulation environment. It works together with the GNS3 Web UI to provide powerful network simulation.
 
@@ -21,33 +21,33 @@ GNS3 VM works with many virtualization platforms. You can choose the right one b
 ## How to Choose a Platform
 
 ### For Personal Learning and Development
-- **VirtualBox** - Free and easy to use. Good for beginners.
-- **VMware Workstation** - Better performance, but you need to buy a license.
+- **VirtualBox** - Free and open source, easy to use, good for beginners
+- **VMware Workstation** - Excellent performance, feature rich
 
 ### For Production Environment
-- **VMware ESXi** - Enterprise solution, stable and reliable.
-- **KVM/QEMU** - Open source option, great performance.
+- **VMware ESXi** - Enterprise solution, stable and reliable
+- **KVM/QEMU** - Open source option, great performance
 
 ### For Windows Users
-- **Hyper-V** - Built into Windows, no extra installation needed.
+- **Hyper-V** - Built into Windows, no extra installation needed
 
 ## Quick Start
 
 Choose your virtualization platform and read the guide:
 
-- [VirtualBox Guide](virtualbox-usage.md)
-- [VMware Workstation Guide](vmware-workstation-usage.md)
-- [VMware ESXi Guide](vmware-esxi-usage.md)
-- [KVM/QEMU Guide](kvm-usage.md)
-- [Hyper-V Guide](hyperv-usage.md)
+- [How to use GNS3 VM with VirtualBox](virtualbox-usage.md)
+- [How to use GNS3 VM with VMware Workstation](vmware-workstation-usage.md)
+- [How to use GNS3 VM with VMware ESXi](vmware-esxi-usage.md)
+- [How to use GNS3 VM with KVM/QEMU](kvm-usage.md)
+- [How to use GNS3 VM with Hyper-V](hyperv-usage.md)
 
 ## System Requirements
 
 No matter which platform you choose, make sure your system meets these basic requirements:
 
 - **CPU**: Supports hardware virtualization (VT-x/AMD-V)
-- **Memory**: At least 8GB of free memory
-- **Disk**: At least 50GB of free disk space
+- **Memory**: 4GB of free memory recommended (GNS3 VM typically uses 2-4GB)
+- **Disk**: At least 20GB of free disk space
 - **Network**: A stable internet connection
 
 ---

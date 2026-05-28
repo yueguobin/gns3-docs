@@ -1,5 +1,5 @@
 ---
-title: Docker 模板
+title: 如何创建 Docker 模板
 功能标签: [操作]
 难度: 入门
 前置知识: "了解 Docker 镜像的基本概念"
@@ -8,7 +8,7 @@ title: Docker 模板
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-# Docker 模板
+# 如何创建 Docker 模板
 
 :::tip 视频教程
 
