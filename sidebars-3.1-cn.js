@@ -26,10 +26,26 @@ module.exports = {
       link: { type: 'doc', id: 'web-ui/project-management' },
       items: [
         'web-ui/project-topology',
+        'web-ui/use-edit-project',
         'web-ui/use-web-console',
         'web-ui/use-web-vnc',
         'web-ui/use-web-wireshark',
         'web-ui/use-packet-filter',
+        'web-ui/use-lock-unlock',
+        'web-ui/use-screenshot',
+        {
+          type: 'category',
+          label: '绘图工具',
+          collapsible: true,
+          collapsed: false,
+          items: [
+            'web-ui/use-add-note',
+            'web-ui/use-insert-picture',
+            'web-ui/use-draw-shape',
+            'web-ui/use-draw-line',
+            'web-ui/use-draw-curve',
+          ],
+        },
       ],
     },
     {
