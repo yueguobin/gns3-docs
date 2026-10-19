@@ -166,7 +166,12 @@ When adding new features or updating content, work in the appropriate versioned 
 
 ## Git Workflow
 
-Main branch: `master` — day-to-day work happens on feature branches, merged into `master` via PRs from the fork (yueguobin/gns3-docs) to upstream (mother/gns3-docs)
+Main branch: `master`. Documentation changes follow a preview-then-merge flow:
+
+1. Cut a feature branch from `master`, make changes, push it to the fork (yueguobin/gns3-docs)
+2. Open a PR against `deploy/cloudflare-pages` — Cloudflare Pages builds a **Preview** deployment (separate URL) for the team to review; it does not affect production
+3. After review, open a PR into `master` on upstream (mother/gns3-docs) and merge; the deploy-side preview PR can be closed
+4. Sync `master` into `deploy/cloudflare-pages` and push — this triggers the production deployment
 
 When committing changes:
 - Focus on content files (docs, images, config)
