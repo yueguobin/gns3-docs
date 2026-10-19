@@ -1,38 +1,8 @@
 # Cloudflare Pages 部署指南
 
-## 快速开始
+生产站点由 Cloudflare Pages 托管，仓库为 `yueguobin/gns3-docs`（fork），生产分支为 `deploy/cloudflare-pages`，推送即自动构建部署。
 
-### 1. 在 Cloudflare Dashboard 创建项目
-
-1. 访问：https://dash.cloudflare.com/
-2. 进入 **Workers & Pages** → **Create application** → **Pages** → **Connect to Git**
-3. 选择仓库：`yueguobin/gns3-docs`
-4. 选择分支：`deploy/cloudflare-pages`
-
-### 2. 配置构建设置
-
-在 **Build settings** 中填写：
-
-```
-Framework preset: None
-Build command: yarn build
-Build output directory: build
-Root directory: / (默认)
-```
-
-### 3. 环境变量（无需配置）
-
-此项目不需要额外的环境变量。
-
-### 4. 点击部署
-
-**Save and Deploy** → Cloudflare Pages 将自动构建和部署
-
----
-
-## 完整配置说明
-
-### 构建设置
+## 构建设置
 
 | 设置项 | 值 |
 |--------|-----|
@@ -40,133 +10,60 @@ Root directory: / (默认)
 | **Build command** | `yarn build` |
 | **Build output directory** | `build` |
 | **Root directory** | `/` |
-| **Branch** | `deploy/cloudflare-pages` |
+| **Production branch** | `deploy/cloudflare-pages` |
 
-### 分支规则
+## 环境变量与运行时版本
 
-- **Production branch**: `deploy/cloudflare-pages`
-- **Preview deployments**: 启用（所有 PR 都会创建预览）
-- **自动部署**: 推送到 `deploy/cloudflare-pages` 分支时自动触发
+- **Dashboard 环境变量**：`YARN_VERSION=1.22.22`（yarn.lock 为 v1 格式，必须锁定 Classic 版本，否则构建报 `The lockfile would have been modified by this install`）
+- **Node 版本**：仓库根目录 `.node-version` 锁定为 `20`（Docusaurus 3 要求 Node 18+）
 
----
+两者都不在代码里生效：前者在 Cloudflare Dashboard → Workers & Pages → gns3-docs → Settings → Environment variables。
 
-## 自定义域名（可选）
+## 分支规则
 
-### 1. 在 Cloudflare Pages 项目设置中
+- 推送到 `deploy/cloudflare-pages` → 自动部署到生产环境
+- 推送到其他分支 → 创建预览部署（Preview）
 
-1. 进入 **Custom domains**
-2. 点击 **Set up a custom domain**
-3. 输入你的域名（如：`docs.yourdomain.com`）
+## 日常部署流程
 
-### 2. 更新 Docusaurus 配置
+`deploy/cloudflare-pages` 应始终保持「master 内容 + 部署配置」的状态，不要直接在上面写文档：
 
-如果使用自定义域名，修改 `docusaurus.config.js`：
+```bash
+# 1. 从 master 创建功能分支，更新文档
+git switch -c fix/xxx master
+# ... 修改、提交、推到 fork、向上游发 PR ...
 
-```js
-module.exports = {
-  url: 'https://docs.yourdomain.com',  // 你的自定义域名
-  baseUrl: '/',
-  // ...
-}
+# 2. PR 合入 master 后，同步到部署分支
+git switch deploy/cloudflare-pages
+git merge master
+git push myfork deploy/cloudflare-pages   # 自动触发生产部署
 ```
 
-### 3. DNS 配置
+部署分支相对 master 只保留这些差异：
 
-Cloudflare 会自动添加 DNS 记录。
+- `docusaurus.config.js`：`url: 'https://gns3-docs.pages.dev'`、`organizationName: 'yueguobin'`
+- `.node-version`、`CLOUDFLARE_PAGES_DEPLOYMENT.md`（本文件）
 
----
+## 本地验证构建
 
-## 本地测试构建
-
-在推送前测试构建：
+推送前建议本地确认：
 
 ```bash
 yarn build
-yarn serve  # 本地预览生产构建
+yarn serve   # 本地预览生产构建
 ```
 
----
+## 自定义域名（可选）
 
-## 部署流程
-
-### 首次部署
-
-```bash
-# 切换到 Cloudflare Pages 分支
-git checkout deploy/cloudflare-pages
-
-# 推送到远程
-git push -u myfork deploy/cloudflare-pages
-
-# 在 Cloudflare Dashboard 触发部署或等待自动部署
-```
-
-### 更新内容后部署
-
-```bash
-# 在 deploy/cloudflare-pages 分支上
-git add .
-git commit -m "更新内容"
-git push myfork deploy/cloudflare-pages
-
-# Cloudflare Pages 会自动检测并部署
-```
-
----
-
-## 访问地址
-
-部署成功后，你会获得：
-
-- **默认地址**: `https://your-project.pages.dev`
-- **自定义域名**: （如果配置）`https://docs.yourdomain.com`
-
----
-
-## 优势对比
-
-| 特性 | Cloudflare Pages | GitHub Pages |
-|------|-----------------|--------------|
-| **全球 CDN** | ✅ Cloudflare 网络 | ✅ GitHub 网络 |
-| **自定义域名** | ✅ 免费无限 | ✅ 免费 |
-| **构建时间** | 快速 | 较慢 |
-| **预览部署** | ✅ 每个分支/PR | ❌ 仅 gh-pages |
-| **带宽限制** | 无限制 | 100GB/月 |
-| **构建次数** | 无限制 | 无限制 |
-
----
+1. Cloudflare Pages 项目设置 → **Custom domains** → **Set up a custom domain**
+2. 同步修改 `docusaurus.config.js` 的 `url` 为自定义域名（影响 sitemap/canonical 链接）
 
 ## 故障排除
 
-### 构建失败
+- **构建失败**：查看 Build logs；先确认 `YARN_VERSION` 和 `.node-version` 是否仍然生效
+- **404 错误**：确认 `baseUrl: '/'`（不是 `/gns3-docs/`）
+- **图片加载失败**：确认图片使用 `useBaseUrl()` 引用
 
-1. 检查 **Build command** 是否为 `yarn build`
-2. 检查 **Build output directory** 是否为 `build`
-3. 查看 **Build logs** 获取详细错误信息
+## 访问地址
 
-### 404 错误
-
-1. 确认 `baseUrl: '/'` （不是 `/gns3-docs/`）
-2. 检查自定义域名 DNS 配置
-
-### 图片加载失败
-
-确保所有图片使用 `useBaseUrl()`:
-
-```jsx
-import useBaseUrl from '@docusaurus/useBaseUrl';
-<img src={useBaseUrl('img/xxx.jpeg')} />
-```
-
----
-
-## 多环境部署建议
-
-### GitHub Pages + Cloudflare Pages 同时部署
-
-可以使用不同的分支：
-
-- `deploy/github-pages` → GitHub Pages (`baseUrl: '/gns3-docs/'`)
-- `deploy/cloudflare-pages` → Cloudflare Pages (`baseUrl: '/'`)
-
-这样可以同时使用两个平台的优势。
+- 默认地址：<https://gns3-docs.pages.dev>
