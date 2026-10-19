@@ -2,11 +2,11 @@
 
 ## Project Overview
 
-This is the official documentation website for GNS3, built with Docusaurus 2. The site provides comprehensive guides and references for GNS3 network simulation software in multiple languages (Chinese and English).
+This is the official documentation website for GNS3, built with Docusaurus 3. The site provides comprehensive guides and references for GNS3 network simulation software in multiple languages (Chinese and English).
 
 **Tech Stack:**
-- Static Site Generator: Docusaurus 2.4.1
-- React: 16.8.4
+- Static Site Generator: Docusaurus 3.10.x
+- React: 18.2
 - Package Manager: yarn
 
 ## Development Setup
@@ -20,9 +20,6 @@ yarn start
 
 # Build for production
 yarn build
-
-# Deploy to GitHub Pages
-yarn deploy
 ```
 
 The development server supports hot-reloading for most changes.
@@ -162,14 +159,14 @@ When adding new features or updating content, work in the appropriate versioned 
 
 ## Deployment
 
-- Target: GitHub Pages
-- Build command: `yarn build`
-- Deploy command: `GIT_USER=<username> USE_SSH=true yarn deploy`
-- Branch: `gh-pages`
+- Production: Cloudflare Pages — auto-builds and deploys on every push to `deploy/cloudflare-pages` (fork repo yueguobin/gns3-docs)
+- Build command: `yarn build`, output directory `build`
+- `YARN_VERSION=1.22.22` is pinned as an environment variable in the Cloudflare Pages dashboard (not in the repo)
+- Keep `deploy/cloudflare-pages` up to date by merging `master` into it before pushing
 
 ## Git Workflow
 
-Current active branch: `docs/3.1-new-features`
+Main branch: `master` — day-to-day work happens on feature branches, merged into `master` via PRs from the fork (yueguobin/gns3-docs) to upstream (mother/gns3-docs)
 
 When committing changes:
 - Focus on content files (docs, images, config)

@@ -1,8 +1,9 @@
 module.exports = {
    title: 'GNS3 Documentation',
    tagline: 'The official guide and reference for GNS3',
-   url: 'https://your-project.pages.dev',
+   url: 'https://gns3-docs.pages.dev',
    baseUrl: '/',
+   trailingSlash: false,
    favicon: 'img/favicon.ico',
    organizationName: 'yueguobin',
    projectName: 'gns3-docs',
@@ -15,18 +16,31 @@ module.exports = {
          },
       },
    ],
+   themes: ['@docusaurus/theme-mermaid'],
+   markdown: {
+      mermaid: true,
+      format: 'mdx',
+      mdx1Compat: {
+         comments: true,
+         admonitions: true,
+         headingIds: true,
+      },
+   },
    themeConfig: {
       algolia: {
          apiKey: '75bf7dd136b92cb76d52b7ef8de3576f',
          appId: '1WIL6RAPZV',
          indexName: 'gns3',
-         algoliaOptions: {},
       },
       colorMode: {
         disableSwitch: true
       },
       zoom: {
-         selector: '.markdown img',
+        selector: '.markdown :not(em) > img',
+        background: {
+          light: 'rgb(255, 255, 255)',
+          dark: 'rgb(50, 50, 50)'
+        },
       },
       navbar: {
          logo: {
@@ -95,7 +109,7 @@ module.exports = {
                ]
             }
          ],
-         copyright: `Copyright © ${new Date().getFullYear()} Galaxy Technologies LLC.`
+         copyright: `Copyright © ${new Date().getFullYear()} GNS3 Technologies Inc.`
       }
    },
    presets: [
@@ -136,6 +150,6 @@ module.exports = {
             editUrl: 'https://github.com/mother/gns3-docs/blob/master/',
          },
       ],
-      'docusaurus-plugin-medium-zoom',
+      'docusaurus-plugin-image-zoom',
    ],
 };

@@ -5,7 +5,6 @@ title: 如何使用 AI Skills
 预计阅读时间: 5 分钟
 ---
 
-import useBaseUrl from '@docusaurus/useBaseUrl';
 
 # 如何使用 AI Skills
 
@@ -29,17 +28,20 @@ GNS3-Skills 是 GNS3 Copilot 的领域知识库，包含 50 个 YAML 技能文�
 ## 使用方式
 
 ### 使用官方仓库
-GNS3-Skills 由 GNS3 Copilot 自动加载，无需手动配置。默认使用官方仓库，GNS3 服务器启动时会自动检查更新，也可在设置页面手动更新，请查阅[如何使用设置页面](../web-ui/configure-settings.md#3-updates)。技能文件通过 LangChain 工具暴露给 LLM，支持热更新。
+GNS3-Skills 由 GNS3 Copilot 自动加载，无需手动配置。默认使用官方仓库，GNS3 服务器启动时会自动检查更新，也可在设置页面手动更新，请查阅[如何使用设置页面](../web-ui/configure-settings.md#3-updates更新检查)。技能文件通过 LangChain 工具暴露给 LLM，支持热更新。
 
 ### 使用自定义技能库
 如果您的企业或团队需要使用定制的技能库，只需确保您的仓库内容格式与 GNS3-Skills 保持一致（格式规则请查阅官方仓库文档），然后在 `gns3_server.conf` 文件中配置：
 
 ```ini
 [Server]
+
 # 自定义技能库仓库地址
 skills_repo_url = https://github.com/your-org/your-custom-skills.git
+
 # 仓库分支（默认：main）
 skills_repo_branch = main
+
 # 是否自动更新技能库（默认：true）
 skills_auto_update = true
 ```

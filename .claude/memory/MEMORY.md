@@ -1,16 +1,2 @@
-# Project Memory Index
-
-This file indexes all persistent memories for the GNS3 documentation project.
-
-## Deployment & Infrastructure
-
-- [Cloudflare Pages Yarn Version](cloudflare-pages-yarn-version.md) - Fix Yarn version compatibility issue (local 1.22.22 vs Cloudflare 4.9.1)
-
----
-
-## Memory Types
-
-- **project**: Information about ongoing work, goals, initiatives, bugs
-- **feedback**: Guidance on how to approach work (what to avoid/keep doing)
-- **user**: Information about user role, preferences, responsibilities
-- **reference**: Pointers to external systems and resources
+- [Mermaid usage](mermaid-usage.md) — Mermaid diagrams must use component import syntax, code block syntax does not work
+- [Cloudflare Pages Yarn version](cloudflare-pages-yarn-version.md) — Cloudflare Pages Yarn version compatibility fix
