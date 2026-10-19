@@ -21,19 +21,33 @@
 
 ## 分支规则
 
-- 推送到 `deploy/cloudflare-pages` → 自动部署到生产环境
-- 推送到其他分支 → 创建预览部署（Preview）
+- 推送到 `deploy/cloudflare-pages` → 自动部署到**生产环境**
+- 推送到其他分支 → 自动创建 **Preview 预览部署**（独立 URL，不影响生产）
 
 ## 日常部署流程
 
-`deploy/cloudflare-pages` 应始终保持「master 内容 + 部署配置」的状态，不要直接在上面写文档：
+`deploy/cloudflare-pages` 是生产分支，始终保持「master 内容 + 部署配置」的状态，不要直接在上面写文档。
+
+### 1. 团队预览（PR 到 deploy 分支）
 
 ```bash
-# 1. 从 master 创建功能分支，更新文档
-git switch -c fix/xxx master
-# ... 修改、提交、推到 fork、向上游发 PR ...
+git switch -c fix/xxx master    # 从 master 创建功能分支
+# ... 修改文档、提交 ...
+git push -u myfork fix/xxx      # 推到 fork，Cloudflare 自动生成 Preview URL
+```
 
-# 2. PR 合入 master 后，同步到部署分支
+然后在 GitHub 上向 `deploy/cloudflare-pages` 开 PR：
+
+- Cloudflare Pages 为该分支创建独立的 Preview 部署（URL 见 PR 状态检查或 Dashboard）
+- 把 Preview URL 发给团队查看，预览不影响生产站点
+
+### 2. 正式合并（PR 到 master）
+
+团队确认后，向 `master`（上游 mother/gns3-docs）开 PR 并合并；deploy 侧的预览 PR 直接关闭即可。
+
+### 3. 生产上线（master 同步到 deploy）
+
+```bash
 git switch deploy/cloudflare-pages
 git merge master
 git push myfork deploy/cloudflare-pages   # 自动触发生产部署
